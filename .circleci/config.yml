@@ -2,7 +2,7 @@ version: 2.1
 parameters:
   test_param:
     type: "string"
-    default: ""
+    default: "oggy"
 
 jobs:
   test_1:
