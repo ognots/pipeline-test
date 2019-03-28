@@ -1,0 +1,40 @@
+version: 2
+parameters:
+  test_param:
+    type: "string"
+
+jobs:
+  test_1:
+    parameters:
+      test_param:
+        type: "string"
+    docker:
+      - image: busybox:1
+    steps:
+      - checkout
+      - run:
+          name: do something
+          command: |
+            echo "hello << parameters.test_param >>"
+
+  test_2:
+    docker:
+      - image: busybox:1
+    steps:
+      - checkout
+      - run:
+          name: do something else
+          command: |
+            echo "bye bye"
+
+workflows:
+  version: 2
+  test_workflow:
+    jobs:
+      - test_1:
+          test_param: << parameters.test_param >>
+      - hold:
+          type: approval
+          requires:
+            - test_1
+      - test_2
