@@ -2,6 +2,7 @@ version: 2.1
 parameters:
   test_param:
     type: "string"
+    default: ""
 
 jobs:
   test_1:
@@ -32,7 +33,7 @@ workflows:
   test_workflow:
     jobs:
       - test_1:
-          test_param: << parameters.test_param >>
+          test_param: << pipeline.parameters.test_param >>
       - hold:
           type: approval
           requires:
